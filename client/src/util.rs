@@ -1,8 +1,37 @@
 use solana_client::rpc_client::RpcClient;
 use solana_sdk::{
-    message, pubkey::Pubkey, signature::Signer, signer::keypair::Keypair, system_instruction,
-    transaction,
+    instruction::Instruction, message, pubkey::Pubkey, signature::Signer, signer::keypair::Keypair,
+    system_instruction, transaction,
 };
+
+pub fn create_program_account_instruction(
+    client: &RpcClient,
+    program_id: &Pubkey,
+    seed: &str,
+    signer: Box<dyn Signer>,
+    program_account: &Pubkey,
+    space: u64,
+) -> Result<Instruction, String> {
+    let pub_key = signer.pubkey();
+    let min_rent = match client.get_minimum_balance_for_rent_exemption(space as usize) {
+        Ok(r) => r,
+        Err(e) => {
+            println!("err: {}", e);
+            return Err("get rent exemption failed".to_string());
+        }
+    };
+
+    let create_account_inst = system_instruction::create_account_with_seed(
+        &pub_key,
+        &program_account,
+        &pub_key,
+        seed,
+        min_rent,
+        space,
+        program_id,
+    );
+    Ok(create_account_inst)
+}
 
 pub fn create_program_account(
     client: &RpcClient,
@@ -23,6 +52,7 @@ pub fn create_program_account(
     match client.get_account(&program_account) {
         Ok(a) => {
             if program_id.eq(&a.owner) {
+                println!("using account {}", program_account);
                 return Ok(program_account);
             }
         }
@@ -74,6 +104,7 @@ pub fn create_program_account(
 pub fn check_program(client: &RpcClient, program_id: &Pubkey) -> Result<bool, String> {
     match client.get_account(&program_id) {
         Ok(acc) => {
+            println!("owner {}", acc.owner);
             if !acc.executable {
                 return Err("account is not program".to_string());
             }
