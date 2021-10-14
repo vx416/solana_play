@@ -4,8 +4,7 @@ use borsh::{BorshDeserialize, BorshSerialize};
 use client::util;
 use solana_client::rpc_client::RpcClient;
 use solana_sdk::{
-    instruction, instruction::AccountMeta, message, pubkey::Pubkey,
-    signature::Signer, transaction,
+    instruction, instruction::AccountMeta, message, pubkey::Pubkey, signature::Signer, transaction,
 };
 
 /// Define the type of state stored in accounts
@@ -89,3 +88,4 @@ fn get_greeting_account(client: &RpcClient, account: &Pubkey) -> GreetingAccount
     let data = &mut &account_info.data[..];
     GreetingAccount::deserialize(data).unwrap()
 }
+

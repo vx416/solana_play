@@ -78,7 +78,6 @@ pub fn create_program_account(
         space,
         program_id,
     );
-
     let block = match client.get_recent_blockhash() {
         Ok(r) => r,
         Err(e) => {
@@ -86,7 +85,6 @@ pub fn create_program_account(
             return Err("get recent block failed".to_string());
         }
     };
-
     let ss = vec![signer];
     let msg = message::Message::new(&[create_account_inst], Some(&pub_key));
     let t = transaction::Transaction::new(&ss, msg, block.0);
