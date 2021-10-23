@@ -1,5 +1,5 @@
 [package]
-name = "bank"
+name = "solana_bank"
 version = "0.1.0"
 authors = ["vicxu <vic.xu.development@gmail.com>"]
 edition = "2018"

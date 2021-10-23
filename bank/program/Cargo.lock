@@ -117,19 +117,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bank"
-version = "0.1.0"
-dependencies = [
- "arrayref",
- "blob",
- "borsh",
- "borsh-derive",
- "solana-program",
- "solana-program-test",
- "solana-sdk",
-]
-
-[[package]]
 name = "base64"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2459,6 +2446,19 @@ dependencies = [
  "solana-metrics",
  "solana-sdk",
  "thiserror",
+]
+
+[[package]]
+name = "solana_bank"
+version = "0.1.0"
+dependencies = [
+ "arrayref",
+ "blob",
+ "borsh",
+ "borsh-derive",
+ "solana-program",
+ "solana-program-test",
+ "solana-sdk",
 ]
 
 [[package]]
