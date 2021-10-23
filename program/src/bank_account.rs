@@ -140,6 +140,10 @@ impl Processor {
                 return Err(ProgramError::InvalidAccountData);
             }
         };
+        // if from_bank_account.authority != from_authority.key{
+
+        // }
+
         let mut to_bank_account = match BankAccount::try_from_slice(&to_account.data.borrow()) {
             Ok(a) => a,
             Err(_) => {
